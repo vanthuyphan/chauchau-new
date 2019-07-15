@@ -5,10 +5,10 @@ The easiest way to get started is to clone the repository:
 
 ```bash
 # Get the latest snapshot
-git clone https://github.com/sahat/hackathon-starter.git myproject
+git clone https://github.com/vanthuyphan/chauchau-new.git chauchau
 
 # Change directory
-cd myproject
+cd chauchau
 
 # Install NPM dependencies
 npm install
