@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+    button(onclick="document.getElementById('id01').style.display='block'" style='width:auto;') Add Lead
+    #id01.modal
+      form.modal-content.animate(action='/action_page.php')
+        .imgcontainer
+          span.close(onclick="document.getElementById('id01').style.display='none'" title='Close Modal') &times;
+          img.avatar(src='img_avatar2.png' alt='Avatar')
+        .container
+          label(for='uname')
+            b Username
+          input(type='text' placeholder='Enter Username' name='uname' required='')
+          label(for='psw')
+            b Password
+          input(type='password' placeholder='Enter Password' name='psw' required='')
+          button(type='submit') Create
+
+    table.table
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') First
+          th(scope='col') Last
+      tbody
+        each lead in leads
+            tr
+               th(scope='row') 1
+               td lead.firstName
