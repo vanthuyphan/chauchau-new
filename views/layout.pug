@@ -9,6 +9,14 @@ html
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+    script(src='/js/lib/jquery.min.js')
+    script(src='/js/lib/popper.min.js')
+    script(src='/js/lib/bootstrap.min.js')
+    script(src='/js/main.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    script(language='javascript', src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(language='javascript', src='https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js')
     block head
 
   body
@@ -20,10 +28,8 @@ html
 
     include partials/footer
 
-    script(src='/js/lib/jquery.min.js')
-    script(src='/js/lib/popper.min.js')
-    script(src='/js/lib/bootstrap.min.js')
-    script(src='/js/main.js')
+    
+
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.
