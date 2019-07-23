@@ -145,7 +145,8 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
-
+app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
+app.post('/createUser', userController.createUser);
 
 /**
  * API examples routes.
