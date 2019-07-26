@@ -144,9 +144,13 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
+app.post('/createLeadTransaction', passportConfig.isAuthenticated, leadController.createLeadTransaction);
+app.post('/deleteLeadTransaction', passportConfig.isAuthenticated, leadController.deleteLeadTransaction); 
 app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
 app.post('/createUser', userController.createUser);
+
 
 /**
  * API examples routes.

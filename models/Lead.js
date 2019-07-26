@@ -1,19 +1,29 @@
 const mongoose = require('mongoose');
 
 const leadSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
-  agent: { type: String, unique: true },
-  firstName: { type: String},
-  lastName: { type: String},
-  middleName: { type: String},
-  address: { type: String},
-  phoneNumber: { type: String},
-
+  email: String,
+  agent: String,
+  firstName: String,
+  lastName: String,
+  middleName: String,
+  mailingAddress: String,
+  insuredProperty: String,
+  phoneNumber: String,
+  dateOfBirth: Date,
+  gender: String,
+  propertyType: String,
+  occupacy: String,
+  loanPurpose: String,
+  loanProcessor: String,
+  insuranceClass: String,
+  currentPremium: Number,
+  newPremium: Number,
+  beatable: Boolean,
 
 }, { timestamps: true });
 
 
 
-const lead = mongoose.model('lead', leadSchema);
+const Lead = mongoose.model('lead', leadSchema);
 
-module.exports = lead;
+module.exports = Lead;
