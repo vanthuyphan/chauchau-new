@@ -1,10 +1,10 @@
-const Lead = require('../models/Lead');
+
 const validator = require('validator');
 /**
  * GET /
  * Leads page.
  */
-
+const Lead = require('../models/Lead');
 
 exports.index = (req, res) => {
   Lead.find({}, (err, leads) => {

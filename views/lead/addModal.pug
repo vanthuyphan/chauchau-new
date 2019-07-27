@@ -1,0 +1,71 @@
+//Add modal
+#addTransaction.modal.fade(tabindex='-1')
+  .modal-dialog.modal-dialog-centered
+      .modal-content
+        form(method='POST', action='/createLeadTransaction')
+          .modal-header
+            h4.modal-title Add Transaction
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='firstName') First Name
+            .col-md-7
+              input#firstName.form-control(type='text', name='firstName', placeholder='First Name', autofocus='autofocus', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='lastName') Last Name
+            .col-md-7
+              input#lastName.form-control(type='text', name='lastName', placeholder='Last Name', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='dob')  Date of Birth
+            .col-md-7
+              input#dob.form-control(type='date', name='dob', placeholder='Date of Birth', autocomplete='off', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='gender')  Gender
+            .col-md-7
+              select#gender.form-control(name='gender', required='required')
+                option Female
+                option Male
+                option Other
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='phoneNumber')  Phone Number
+            .col-md-7
+              input#phoneNumber.form-control(type='tel', name='phoneNumber', placeholder='Phone Number', autocomplete='off', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='mailingAddress') Mailing Address
+            .col-md-7
+              input#mailingAddress.form-control(type='text', name='mailingAddress', placeholder='Mailing Address', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='insuredProperty')  Insured Property Address
+            .col-md-7
+              input#insuredProperty.form-control(type='text', name='insuredProperty', placeholder='Insured Property Address', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='propertyType')  Property Type
+            .col-md-7
+              select#gender.form-control(name='propertyType', required='required')
+                option Single Family Residence
+                option Condominium
+                option Townhouse/PUD
+                option Duplex
+                option Triplex
+                option Fourplex
+                option Manuf Housing
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='occupancy')  Occupancy
+            .col-md-7
+              select#Occupancy.form-control(name='occupancy', required='required')
+                option Owner Occupied
+                option Second Home
+                option Invesstment
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='loanPurpose')  Loan Purpose
+            .col-md-7
+              select#loanPurpose.form-control(name='loanPurpose', required='required')
+                option Purchase
+                option Refinance
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='email')  Email
+            .col-md-7
+              input#email.form-control(type='email', name='email', placeholder='Email', autofocus='autofocus', autocomplete='email', required='required')
+          .modal-footer
+            input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+            input.btn.btn-success(type='submit', value='Add')

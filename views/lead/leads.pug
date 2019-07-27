@@ -251,6 +251,7 @@ block head
     $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
     });
     });
+    
     //get id of lead transaction in anchor to delete Modal
     $(document).on("click", ".delete", function () {
     var leadId = $(this).data('id');
@@ -304,7 +305,7 @@ block content
                 span.custom-checkbox
                   input#id(type='checkbox', data-id= idLead, name=idLead, value=idLead)
                   label(for='checkbox1')
-              td= lead.firstName + ' ' + lead.lastName + idLead
+              td= lead.firstName + ' ' + lead.lastName
               td= lead.insuredProperty
               td= lead.currentPremium
               td= lead.newPremium
@@ -317,94 +318,7 @@ block content
                   i.material-icons(data-toggle='tooltip', title='Edit') 
                 a.delete(href='#deleteTransaction', data-toggle='modal', data-id= idLead, name=idLead )
                   i.material-icons(data-toggle='tooltip', title='Delete') 
-      //Add modal
-      #addTransaction.modal.fade(tabindex='-1')
-        .modal-dialog.modal-dialog-centered
-          .modal-content
-            form(method='POST', action='/createLeadTransaction')
-              .modal-header
-                h4.modal-title Add Transaction
-                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-              input(type='hidden', name='_csrf', value=_csrf)
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='firstName') First Name
-                .col-md-7
-                  input#firstName.form-control(type='text', name='firstName', placeholder='First Name', autofocus='autofocus', autocomplete='on', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='lastName') Last Name
-                .col-md-7
-                  input#lastName.form-control(type='text', name='lastName', placeholder='Last Name', autocomplete='on', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='dob')  Date of Birth
-                .col-md-7
-                  input#dob.form-control(type='date', name='dob', placeholder='Date of Birth', autocomplete='off', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='gender')  Gender
-                .col-md-7
-                  //input#gender.form-control(type='text', name='gender', placeholder='Gender', autocomplete='off', //required='required')
-                  select#gender.form-control(name='gender', required='required')
-                    option Female
-                    option Male
-                    option Other
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='phoneNumber')  Phone Number
-                .col-md-7
-                  input#phoneNumber.form-control(type='tel', name='phoneNumber', placeholder='Phone Number', autocomplete='off', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='mailingAddress') Mailing Address
-                .col-md-7
-                  input#mailingAddress.form-control(type='text', name='mailingAddress', placeholder='Mailing Address', autocomplete='on', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='insuredProperty')  Insured Property Address
-                .col-md-7
-                  input#insuredProperty.form-control(type='text', name='insuredProperty', placeholder='Insured Property Address', autocomplete='on', required='required')
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='propertyType')  Property Type
-                .col-md-7
-                  //input#propertyType.form-control(type='text', name='propertyType', placeholder='Property Type', autocomplete='off', //required='required')
-                  select#gender.form-control(name='propertyType', required='required')
-                    option Single Family Residence
-                    option Condominium
-                    option Townhouse/PUD
-                    option Duplex
-                    option Triplex
-                    option Fourplex
-                    option Manuf Housing
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='occupancy')  Occupancy
-                .col-md-7
-                  //input#occupancy.form-control(type='text', name='occupancy', placeholder='Occupancy', autocomplete='off', //required='required')
-                  select#Occupancy.form-control(name='occupancy', required='required')
-                    option Owner Occupied
-                    option Second Home
-                    option Invesstment
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='loanPurpose')  Loan Purpose
-                .col-md-7
-                  select#loanPurpose.form-control(name='loanPurpose', required='required')
-                    option Purchase
-                    option Refinance
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='email')  Email
-                .col-md-7
-                  input#email.form-control(type='email', name='email', placeholder='Email', autofocus='autofocus', autocomplete='email', required='required')
-              .modal-footer
-                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
-                input.btn.btn-success(type='submit', value='Add')
-      //Delete
-      #deleteTransaction.modal.fade
-        .modal-dialog
-          .modal-content
-            form(method='POST', action='/deleteLeadTransaction')
-              .modal-header
-                h4.modal-title Delete Transaction
-                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-              input(type='hidden', name='_csrf', value=_csrf)
-              .modal-body
-                input#leadId(type='hidden', name='leadId', value='')
-                p Are you sure you want to delete these Records
-                p.text-warning
-                  small This action cannot be undone.
-              .modal-footer
-                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
-                input.btn.btn-danger(type='submit', value='Delete')
+      include addModal
+      include deleteModal
+      //include editModal
+
