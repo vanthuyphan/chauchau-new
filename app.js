@@ -146,7 +146,9 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
 app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
-app.post('/createUser', userController.createUser);
+app.post('/createUser', passportConfig.isAuthenticated,userController.createUser);
+app.post('/editUser',passportConfig.isAuthenticated, userController.editUser);
+app.post('/deleteUser',passportConfig.isAuthenticated, userController.deleteUser);
 
 /**
  * API examples routes.

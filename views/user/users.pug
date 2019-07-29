@@ -4,6 +4,11 @@ block head
   //- script(language='javascript', src='https://code.jquery.com/jquery-3.3.1.js')
   
   style(type='text/css').
+    #usersTable_wrapper {
+    display:inline;
+    flex-flow: row wrap;
+    align-items: center;
+    }
     .table-wrapper {
     background: #fff;
     padding: 20px 25px;
@@ -51,12 +56,12 @@ block head
     padding: 12px 15px;
     vertical-align: middle;
     }
-    table.table tr th:first-child {
-    width: 60px;
-    }
-    table.table tr th:last-child {
-    width: 100px;
-    }
+    //- table.table tr th:first-child {
+    //- width: 60px;
+    //- }
+    //- table.table tr th:last-child {
+    //- width: 100px;
+    //- }
     table.table-striped tbody tr:nth-of-type(odd) {
     background-color: #fcfcfc;
     }
@@ -217,6 +222,7 @@ block head
     .modal form label {
     font-weight: normal;
     }
+    
   script(type='text/javascript').
     $(document).ready(function(){
     // Activate tooltip
@@ -240,7 +246,9 @@ block head
     }
     });
     //Datatable Mange User
-     $('#usersTable').DataTable();
+     $('#usersTable').DataTable({
+         "scrollX": true
+     });
     //-  $('#usersTable').DataTable(
     //-   {
     //-   "dom": '<"dt-buttons"Bf>
@@ -267,17 +275,41 @@ block head
 
     //- });
     });
-     $(document).on("click", ".edit", function () {
-        var myBookId = $(this).data('username');
-        $(".modal-body #nameID").val( myBookId );
-        // As pointed out in comments,
-        // it is unnecessary to have to manually call the modal.
-        // $('#addBookDialog').modal('show');
+     $(document).on("click", ".edit", function () {      
+        var data = $(this).data();
+        $(".modal-body #eEmail").val( data['email']) ;
+        $(".modal-body #eName").val( data['username']); 
+        $(".modal-body #eGender").val( data['gender']) ;
+        $(".modal-body #eLocation").val( data['location']); 
+        $(".modal-body #eWebsite").val( data['website']);
+        if(data['gender'] == 'male'){
+            $("#eMale").prop("checked", true);
+        }
+        if(data['gender'] == 'female'){
+            $("#eFemale").prop("checked", true);
+        }
+        if(data['gender'] == 'other'){
+            $("#eOther").prop("checked", true);
+        }
         });
+    $(document).on("click", ".delete", function () {
+      var data = $(this).data();
+      $(".modal-body #userId").val( data['id']) ;
+    });
+    $(document).on("click","#deleteSelect", function () {
+      var idArray = "";
+      $('input[type="checkbox"]').each(function(){
+      if($(this). prop("checked") == true && this.id != "selectAll"){
+      idArray += $(this).data('id') + ',';
+      }
+      });
+      idArray = idArray.substring(0, idArray.length - 1);
+      $(".modal-body #userId").val(idArray);
+      $('#deleteTransaction').modal('show');
+    });    
 
     
 block content
-   .container
       .table-wrapper
         .table-title
           .row
@@ -288,95 +320,51 @@ block content
             .col-sm-6
               a.btn.btn-success(href='#addEmployeeModal', data-toggle='modal')
                 i.material-icons 
-                span Add New Employee
-              a.btn.btn-danger(href='#deleteEmployeeModal', data-toggle='modal')
+                span Add New Users
+              a.btn.btn-danger(href='#deleteEmployeeModal',id="deleteSelect", data-toggle='modal')
                 i.material-icons 
                 span Delete
-        table#usersTable.table.table-striped.table-hover
+        table#usersTable.table.table-striped.table-hover.table-stripped.table-sm(width='100%')
           thead
             tr
               th
                 span.custom-checkbox
                   input#selectAll(type='checkbox')
                   label(for='selectAll')
-              th Name
               th Email
-              th Actions
+              th Password
+              th Name
+              th Gender
+              th Location
+              th Website
+              th  Actions
 
           - var count = 1
           each user in users
+            - var idUser = user._id
             tr
               td
                 span.custom-checkbox
-                  input#checkbox1(type='checkbox', name='options[]', value=count++)
+                  input#id(type='checkbox', data-id= idUser)
                   label(for='checkbox1')
               td= user.email
-              td= user.password 
+              td= user.password
+              td= user.profile.name
+              td= user.profile.gender
+              td= user.profile.location
+              td= user.profile.website 
               td
-                a.edit(href='#editEmployeeModal', data-toggle='modal',id="editId"+ count,data-testid=count, data-userName=user.email)
-                  i.material-icons(data-toggle='tooltip', title='Edit') 
-                a.delete(href='#deleteEmployeeModal', data-toggle='modal')
+                a.edit(href='#editEmployeeModal', data-toggle='modal',id="editId"+ count,data-testid=count, 
+                data-email=user.email,
+                data-username=user.profile.name, 
+                data-gender=user.profile.gender,
+                data-location=user.profile.location,
+                data-website=user.profile.website)
+                  i.material-icons(data-toggle='tooltip', title='Edit')     
+                a.delete(href='#deleteEmployeeModal', data-toggle='modal', data-id= idUser)
                   i.material-icons(data-toggle='tooltip', title='Delete') 
-      #addEmployeeModal.modal.fade
-        .modal-dialog
-          .modal-content
-            form(method='POST',action='/createUser')
-              .modal-header
-                h4.modal-title Edit Employee
-                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-              input(type='hidden', name='_csrf', value=_csrf)
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
-                .col-md-7
-                  input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, autocomplete='email', required)
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') Password
-                .col-md-7
-                  input.form-control(type='password', name='password', id='password', placeholder='Password', autocomplete='new-password', required)
-              .form-group.row
-                label.col-md-3.col-form-label.font-weight-bold.text-right(for='confirmPassword') Confirm Password
-                .col-md-7
-                  input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', autocomplete='new-password', required)
-              .modal-footer
-                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
-                input.btn.btn-success(type='submit', value='Add')
-      // Edit Modal HTML
-      #editEmployeeModal.modal.fade
-        .modal-dialog
-          .modal-content
-            form
-              .modal-header
-                h4.modal-title Edit Employee
-                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-              .modal-body
-                .form-group
-                  label Name
-                  input.form-control(type='text', required='', id='nameID',disabled)
-                .form-group
-                  label Email
-                  input.form-control(type='email', required='')
-                .form-group
-                  label Address
-                  textarea.form-control(required='')
-                .form-group
-                  label Phone
-                  input.form-control(type='text', required='')
-              .modal-footer
-                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
-                input.btn.btn-info(type='submit', value='Save')
-      // Delete Modal HTML
-      #deleteEmployeeModal.modal.fade
-        .modal-dialog
-          .modal-content
-            form
-              .modal-header
-                h4.modal-title Delete Employee
-                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-              .modal-body
-                p Are you sure you want to delete these Records?
-                p.text-warning
-                  small This action cannot be undone.
-              .modal-footer
-                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
-                input.btn.btn-danger(type='submit', value='Delete')
+      include addModal
+      include editModal
+      include deleteModal
+      
 

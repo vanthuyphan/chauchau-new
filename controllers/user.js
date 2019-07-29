@@ -125,46 +125,7 @@ exports.postSignup = (req, res, next) => {
   });
 };
 
-/**
- * POST /signup
- * Create a new local account.
- */
-exports.createUser = (req, res, next) => {
-  const validationErrors = [];
-  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
-  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
-  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Passwords do not match' });
 
-  if (validationErrors.length) {
-    req.flash('errors', validationErrors);
-    return res.redirect('/users');
-  }
-  req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
-
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password
-  });
-
-  User.findOne({ email: req.body.email }, (err, existingUser) => {
-    if (err) { return next(err); }
-    if (existingUser) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/users');
-    }
-    user.save((err) => {
-      if (err) { return next(err); }
-      // req.flash('success', { msg: 'Success! New user created with userid '+ req.body.email });
-      return res.redirect('/users');
-      // req.logIn(user, (err) => {
-      //   if (err) {
-      //     return next(err);
-      //   }
-      //   res.redirect('/');
-      // });
-    });
-  });
-};
 /**
  * GET /account
  * Profile page.
@@ -234,7 +195,91 @@ exports.postUpdatePassword = (req, res, next) => {
     });
   });
 };
+/**
+ * POST /deleteUsers
+ * Delete Users in user management screen
+ */
+exports.deleteUser = (req,res,next) => {
+const inputId = req.body.userId; 
+const idArray = inputId.split(",");
+User.remove({ _id: { $in: idArray } }, (err) => {
+  if (err) { return next(err); }
+  req.flash('info', { msg: 'Users has been deleted.' });
+  res.redirect('/users');
+});
+};
+/**
+ * POST /editUser
+ * Edit Users in user management screen
+ */
+exports.editUser = (req,res,next) => {
+  const user = new User({
+    email: req.body.eEmail,
+  });
+  // User.findById(req.user.id, (err, user) => {
+  User.findOne({ email: req.body.eEmail }, (err, user) => {
+    if (err) { 
+      req.flash('errors', { msg: 'Cannot find user to edit.' });
+      return res.redirect('/users');
+    }
+    user.profile.name = req.body.eName || '';
+    user.profile.gender = req.body.eGender || '';
+    user.profile.location = req.body.eLocation || '';
+    user.profile.website = req.body.eWebsite || '';
+    user.save((err) => {
+      if (err) { 
+        req.flash('errors', { msg: 'Error edit. Please contact adminstrator to check' });
+        return res.redirect('/users');
+      }
+      req.flash('success', { msg: 'Success! User changed successfully for account '+ req.body.eEmail });
+      return res.redirect('/users');
+    });
+  });
+  };
+  /**
+ * POST /signup
+ * Create a new local account.
+ */
+exports.createUser = (req, res, next) => {
+  const validationErrors = [];
+  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
+  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
+  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Passwords do not match' });
 
+  if (validationErrors.length) {
+    req.flash('errors', validationErrors);
+    return res.redirect('/users');
+  }
+  req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
+
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password
+  });
+
+  User.findOne({ email: req.body.email }, (err, existingUser) => {
+    if (err) { return next(err); }
+    if (existingUser) {
+      req.flash('errors', { msg: 'Account with that email address already exists.' });
+      return res.redirect('/users');
+    }
+    user.profile.name = req.body.name || '';
+    user.profile.gender = req.body.gender || '';
+    user.profile.location = req.body.location || '';
+    user.profile.website = req.body.website || '';
+    user.save((err) => {
+      if (err) { return next(err); }
+      // req.flash('success', { msg: 'Success! New user created with userid '+ req.body.email });
+      return res.redirect('/users');
+      // req.logIn(user, (err) => {
+      //   if (err) {
+      //     return next(err);
+      //   }
+      //   res.redirect('/');
+      // });
+    });
+  });
+};
 /**
  * POST /account/delete
  * Delete user account.
