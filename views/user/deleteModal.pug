@@ -1,0 +1,16 @@
+#deleteEmployeeModal.modal.fade
+        .modal-dialog
+          .modal-content
+            form(method='POST',action='/deleteUser')
+              .modal-header
+                h4.modal-title Delete Users
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+              input(type='hidden', name='_csrf', value=_csrf)  
+              .modal-body
+                input#userId(type='hidden', name='userId', value='')
+                p Are you sure you want to delete these Records?
+                p.text-warning
+                  small This action cannot be undone.
+              .modal-footer
+                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+                input.btn.btn-danger(type='submit', value='Delete')
