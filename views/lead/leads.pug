@@ -1,29 +1,324 @@
 extends ../layout
+block head  
+  //link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  //script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+  //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+  //script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+  //script(src='https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js')
+  link(rel='stylesheet', href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+  style(type='text/css').
+    .table-wrapper {
+    background: #fff;
+    padding: 20px 25px;
+    //margin: 30px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+    .table-title {
+    padding-bottom: 15px;
+    background: #435d7d;
+    color: #fff;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+    font-weight: bold;
+    }
+    .table-title .btn-group {
+    float: right;
+    }
+    .table-title .btn {
+    color: #fff;
+    float: right;
+    font-size: 13px;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 10px;
+    }
+    .table-title .btn i {
+    float: left;
+    font-size: 21px;
+    margin-right: 5px;
+    }
+    .table-title .btn span {
+    float: left;
+    margin-top: 2px;
+    }
+    table.table tr th,
+    table.table tr td {
+    border-color: #e9e9e9;
+    padding: 12px 15px;
+    vertical-align: middle;
+    }
+    table.table tr th:first-child {
+    width: 60px;
+    }
+    table.table tr th:last-child {
+    width: 100px;
+    }
+    table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+    }
+    table.table-striped.table-hover tbody tr:hover {
+    background: #f5f5f5;
+    }
+    table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+    }
+    table.table td:last-child i {
+    opacity: 0.9;
+    font-size: 22px;
+    margin: 0 5px;
+    }
+    table.table td a {
+    font-weight: bold;
+    color: #566787;
+    display: inline-block;
+    text-decoration: none;
+    outline: none !important;
+    }
+    table.table td a:hover {
+    color: #2196F3;
+    }
+    table.table td a.edit {
+    color: #FFC107;
+    }
+    table.table td a.delete {
+    color: #F44336;
+    }
+    table.table td i {
+    font-size: 19px;
+    }
+    table.table .avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+    }
+    .pagination {
+    float: right;
+    margin: 0 0 5px;
+    }
+    .pagination li a {
+    border: none;
+    font-size: 13px;
+    min-width: 30px;
+    min-height: 30px;
+    color: #999;
+    margin: 0 2px;
+    line-height: 30px;
+    border-radius: 2px !important;
+    text-align: center;
+    padding: 0 6px;
+    
+    .pagination li a:hover {
+    color: #666;
+    }
+    .pagination li.active a,
+    .pagination li.active a.page-link {
+    background: #03A9F4;
+    }
+    .pagination li.active a:hover {
+    background: #0397d6;
+    }
+    .pagination li.disabled i {
+    color: #ccc;
+    }
+    .pagination li i {
+    font-size: 16px;
+    padding-top: 6px
+    }
+    .hint-text {
+    float: left;
+    margin-top: 10px;
+    font-size: 13px;
+    }
+    .custom-checkbox {
+    position: relative;
+    }
+    .custom-checkbox input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    margin: 5px 0 0 3px;
+    z-index: 9;
+    }
+    .custom-checkbox label:before {
+    width: 18px;
+    height: 18px;
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    background: white;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    box-sizing: border-box;
+    z-index: 2;
+    }
+    .custom-checkbox input[type="checkbox"]:checked+label:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid #000;
+    border-width: 0 3px 3px 0;
+    transform: inherit;
+    z-index: 3;
+    transform: rotateZ(45deg);
+    }
+    .custom-checkbox input[type="checkbox"]:checked+label:before {
+    border-color: #03A9F4;
+    background: #03A9F4;
+    }
+    .custom-checkbox input[type="checkbox"]:checked+label:after {
+    border-color: #fff;
+    }
+    .custom-checkbox input[type="checkbox"]:disabled+label:before {
+    color: #b8b8b8;
+    cursor: auto;
+    box-shadow: none;
+    background: #ddd;
+    }
+    /* Modal styles */
+    .modal .modal-dialog {
+    max-width: 400px;
+    }
+    .modal .modal-header,
+    .modal .modal-body,
+    .modal .modal-footer {
+    padding: 20px 30px;
+    }
+    .modal .modal-content {
+    border-radius: 3px;
+    }
+    .modal .modal-footer {
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
+    }
+    .modal .modal-title {
+    display: inline-block;
+    }
+    .modal .form-control {
+    border-radius: 2px;
+    box-shadow: none;
+    border-color: #dddddd;
+    }
+    .modal textarea.form-control {
+    resize: vertical;
+    }
+    .modal .btn {
+    border-radius: 2px;
+    min-width: 100px;
+    }
+    .modal form label {
+    font-weight: normal;
+    }
+    /*Sort*/
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+    }
+  script.
+    $(document).ready(function () {
+    //Data tabble
+    $('#leadTable').DataTable({
+    "scrollX": true,
+    columnDefs: [{
+    orderable: false,
+    targets: 0
+    }]
+    });
+    //$('.dataTables_length').addClass('bs-select');
+    //Select all checkbox
+    $("#selectAll").click(function () {
+    $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+    });
+    });
+    
+    //get id of lead transaction in anchor to delete Modal
+    $(document).on("click", ".delete", function () {
+    var leadId = $(this).data('id');
+    $(".modal-body #leadId").val( leadId );
+    $('#deleteTransaction').modal('show');
+    });
 
+    $(document).on("click","#deleteSelect", function () {
+    var idArray = "";
+    $('input[type="checkbox"]').each(function(){
+    if($(this). prop("checked") == true && this.id != "selectAll"){
+    idArray += $(this).data('id') + ',';
+    }
+    });
+    idArray = idArray.substring(0, idArray.length - 1);
+    $(".modal-body #leadId").val(idArray);
+    $('#deleteTransaction').modal('show');
+    });    
 block content
-    button(onclick="document.getElementById('id01').style.display='block'" style='width:auto;') Add Lead
-    #id01.modal
-      form.modal-content.animate(action='/action_page.php')
-        .imgcontainer
-          span.close(onclick="document.getElementById('id01').style.display='none'" title='Close Modal') &times;
-          img.avatar(src='img_avatar2.png' alt='Avatar')
-        .container
-          label(for='uname')
-            b Username
-          input(type='text' placeholder='Enter Username' name='uname' required='')
-          label(for='psw')
-            b Password
-          input(type='password' placeholder='Enter Password' name='psw' required='')
-          button(type='submit') Create
-
-    table.table
-      thead
-        tr
-          th(scope='col') #
-          th(scope='col') First
-          th(scope='col') Last
-      tbody
-        each lead in leads
+    .container
+      .table-wrapper
+        .table-title
+          .row
+            .col-sm-6
+              h2 Lead
+            .col-sm-6
+              button.btn.btn-danger.active(type='button', id="deleteSelect", data-toggle='modal', data-target='#deleteTransaction')
+                | Delete
+              button.btn.btn-success.active(type='button', data-toggle='modal', data-target='#addTransaction')
+                | Add
+      table#leadTable.table.table-hover.table-stripped.table-sm(width='100%')
+        thead
+          tr
+            th(scope='col')
+              span.custom-checkbox
+                input#selectAll(type='checkbox')
+                label(for='selectAll')  
+            th(scope='col') Name
+            th(scope='col') Insured Property
+            th(scope='col') Current Premium
+            th(scope='col') New Premium
+            th(scope='col') Beatable?
+            th(scope='col') Loan Purpose
+            th(scope='col') Loan Processor
+            th(scope='col') Action
+        tbody
+          each lead in leads
+            - var idLead = lead._id
             tr
-               th(scope='row') 1
-               td lead.firstName
+              td
+                span.custom-checkbox
+                  input#id(type='checkbox', data-id= idLead, name=idLead, value=idLead)
+                  label(for='checkbox1')
+              td= lead.firstName + ' ' + lead.lastName
+              td= lead.insuredProperty
+              td= lead.currentPremium
+              td= lead.newPremium
+              td= lead.beatable
+              td= lead.loanPurpose
+              td= lead.loanProcessor
+              //td= lead.email
+              td
+                a.edit(href='#editEmployeeModal', data-toggle='modal',id="editId"+ idLead,data-testid=count, data-userName=user.email)
+                  i.material-icons(data-toggle='tooltip', title='Edit') 
+                a.delete(href='#deleteTransaction', data-toggle='modal', data-id= idLead, name=idLead )
+                  i.material-icons(data-toggle='tooltip', title='Delete') 
+      include addModal
+      include deleteModal
+      //include editModal
+
