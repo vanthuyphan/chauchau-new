@@ -1,0 +1,37 @@
+#editEmployeeModal.modal.fade
+        .modal-dialog
+          .modal-content
+            form(method='POST',action='/editUser')
+              .modal-header
+                h4.modal-title Edit Employee
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                input(type='hidden', name='_csrf', value=_csrf)
+              .modal-body
+                .form-group
+                  label Email
+                  input.form-control(type='email', required='',name='eEmail', id='eEmail' )
+                .form-group
+                  label Name
+                  input.form-control#eName(type='text', name='eName')
+                .form-group
+                  label Gender
+                  .form-check.form-check-inline
+                    input(type='radio', class='form-check-input' checked=user.profile.gender == 'male',id='eMale', name='eGender', value='male', data-toggle='radio')
+                    label.form-check-label Male
+
+                  .form-check.form-check-inline
+                    input(type='radio', class='form-check-input' checked=user.profile.gender == 'female',id='eFemale,' name='eGender', value='female', data-toggle='radio')
+                    label.form-check-label Female
+
+                  .form-check.form-check-inline
+                    input(type='radio', class='form-check-input' checked=user.profile.gender == 'other',id='eOther', name='eGender', value='other', data-toggle='radio')
+                    label.form-check-label Other
+                .form-group
+                  label Location
+                  textarea.form-control(type='text', id='eLocation',name='eLocation')
+                .form-group
+                  label Website
+                  input.form-control(type='text', id='eWebsite',name='eWebsite')
+              .modal-footer
+                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+                input.btn.btn-info(type='submit', value='Save')
