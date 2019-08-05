@@ -144,10 +144,17 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-
+/**
+ * Leads
+ */
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
 app.post('/createLeadTransaction', passportConfig.isAuthenticated, leadController.createLeadTransaction);
-app.post('/deleteLeadTransaction', passportConfig.isAuthenticated, leadController.deleteLeadTransaction); 
+app.post('/deleteLeadTransaction', passportConfig.isAuthenticated, leadController.deleteLeadTransaction);
+app.post('/api/lead', leadController.leadPost);
+
+/**
+ * Users
+ */
 app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
 app.post('/createUser', passportConfig.isAuthenticated,userController.createUser);
 app.post('/editUser',passportConfig.isAuthenticated, userController.editUser);
