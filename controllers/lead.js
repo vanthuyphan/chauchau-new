@@ -73,6 +73,7 @@ exports.deleteLeadTransaction = (req, res, next) => {
 };
 
 exports.leadPost = (req, res) => {
+  console.log("Body", req.body)
   Lead.findOneAndUpdate(
     {_id: req.body.id}, // find a document with that filter
     req.body, // document to insert when nothing was found
