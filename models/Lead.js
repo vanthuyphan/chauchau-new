@@ -12,14 +12,13 @@ const leadSchema = new mongoose.Schema({
   dateOfBirth: Date,
   gender: String,
   propertyType: String,
-  occupacy: String,
+  occupancy: String,
   loanPurpose: String,
   loanProcessor: String,
   insuranceClass: String,
   currentPremium: Number,
   newPremium: Number,
-  beatable: Boolean,
-
+  cheaper: String
 }, { timestamps: true });
 
 

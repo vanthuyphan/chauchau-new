@@ -31,6 +31,10 @@
             .col-md-7
               input#phoneNumber.form-control(type='tel', name='phoneNumber', placeholder='Phone Number', autocomplete='off', required='required')
           .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='email')  Email
+            .col-md-7
+              input#email.form-control(type='email', name='email', placeholder='Email', autofocus='autofocus', autocomplete='email', required='required')
+          .form-group.row
             label.col-md-3.col-form-label.font-weight-bold.text-right(for='mailingAddress') Mailing Address
             .col-md-7
               input#mailingAddress.form-control(type='text', name='mailingAddress', placeholder='Mailing Address', autocomplete='on', required='required')
@@ -63,9 +67,13 @@
                 option Purchase
                 option Refinance
           .form-group.row
-            label.col-md-3.col-form-label.font-weight-bold.text-right(for='email')  Email
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='loanProcessor')  Loan Processor
             .col-md-7
-              input#email.form-control(type='email', name='email', placeholder='Email', autofocus='autofocus', autocomplete='email', required='required')
+              input#loanProcessor.form-control(type='text', name='loanProcessor', placeholder='Loan Processor', autocomplete='on')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='agent')  Agent
+            .col-md-7
+              input#agent.form-control(type='text', name='agent', placeholder='Agent', autocomplete='on')
           .modal-footer
             input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
             input.btn.btn-success(type='submit', value='Add')

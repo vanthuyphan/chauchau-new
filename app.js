@@ -146,8 +146,9 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
-app.post('/createLeadTransaction', passportConfig.isAuthenticated, leadController.createLeadTransaction);
+app.post('/createLeadTransaction', leadController.createLeadTransaction);
 app.post('/deleteLeadTransaction', passportConfig.isAuthenticated, leadController.deleteLeadTransaction); 
+app.post('/editLeadTransaction', leadController.editLeadTransaction); 
 app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
 app.post('/createUser', passportConfig.isAuthenticated,userController.createUser);
 app.post('/editUser',passportConfig.isAuthenticated, userController.editUser);
