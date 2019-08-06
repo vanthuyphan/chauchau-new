@@ -8,10 +8,8 @@ const Lead = require('../models/Lead');
 
 exports.index = (req, res) => {
   Lead.find({}, (err, leads) => {
-    console.log("Leads", leads)
     res.render('lead/leads', {leads: leads});
   });
-
 };
 
 /**POST create new lead transaction
@@ -61,7 +59,7 @@ exports.createLeadTransaction = (req, res, next) => {
  * Delete lead transaction
  */
 exports.deleteLeadTransaction = (req, res, next) => {
-	const inputId = req.body.leadId; 
+	const inputId = req.body.leadId;
 	const idArray = inputId.split(",");
 	Lead.remove({ _id: { $in: idArray } }, (err) => {
     if (err) { return next(err); }
@@ -75,6 +73,7 @@ exports.deleteLeadTransaction = (req, res, next) => {
     res.redirect('/leads');
   });*/
 };
+
 
 /**
 * POST /lead/edit
@@ -120,3 +119,21 @@ exports.editLeadTransaction = (req, res, next) => {
   });  
 
   };
+
+
+exports.leadPost = (req, res) => {
+  console.log("Body", req.body)
+  Lead.findOneAndUpdate(
+    {_id: req.body.id}, // find a document with that filter
+    req.body, // document to insert when nothing was found
+    {upsert: true, new: true, runValidators: true}, // options
+    function (err, doc) { // callback
+      if (err) {
+        // handle error
+      } else {
+        res.sendStatus(200)
+      }
+    }
+  );
+};
+
