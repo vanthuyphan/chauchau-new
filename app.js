@@ -150,6 +150,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/leads', passportConfig.isAuthenticated, leadController.index);
 app.post('/createLeadTransaction', passportConfig.isAuthenticated, leadController.createLeadTransaction);
 app.post('/deleteLeadTransaction', passportConfig.isAuthenticated, leadController.deleteLeadTransaction);
+app.post('/editLeadTransaction', passportConfig.isAuthenticated, leadController.editLeadTransaction); 
 app.post('/api/lead', leadController.leadPost);
 
 /**

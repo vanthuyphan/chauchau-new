@@ -27,7 +27,7 @@ exports.createLeadTransaction = (req, res, next) => {
   const lead = new Lead({
   	firstName: req.body.firstName,
   	lastName: req.body.lastName,
-  	dob: req.body.dob,
+  	dateOfBirth: req.body.dob,
   	gender: req.body.gender,
   	phoneNumber: req.body.phoneNumber,
   	mailingAddress: req.body.mailingAddress,
@@ -35,7 +35,9 @@ exports.createLeadTransaction = (req, res, next) => {
   	propertyType: req.body.propertyType,
   	occupancy: req.body.occupancy,
   	loanPurpose: req.body.loanPurpose,
-    email: req.body.email
+    email: req.body.email,
+    agent: req.body.agent,
+    loanProcessor: req.body.loanProcessor
   });
 
   Lead.findOne({ insuredProperty: req.body.insuredProperty }, (err, existingLead) => {
@@ -53,8 +55,8 @@ exports.createLeadTransaction = (req, res, next) => {
 
 
 /**
- * POST /account/delete
- * Delete one lead transaction
+ * POST /lead/delete
+ * Delete lead transaction
  */
 exports.deleteLeadTransaction = (req, res, next) => {
 	const inputId = req.body.leadId;
@@ -72,6 +74,53 @@ exports.deleteLeadTransaction = (req, res, next) => {
   });*/
 };
 
+
+/**
+* POST /lead/edit
+* Edit one lead transaction
+*/
+exports.editLeadTransaction = (req, res, next) => {
+  const validationErrors = [];
+  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
+
+  if (validationErrors.length) {
+    req.flash('errors', validationErrors);
+    return res.redirect('/leads');
+  }
+  req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
+
+  Lead.findOne({ _id: req.body.leadId}, (err, existingLead) => {
+    if (err) { return next(err); }
+    existingLead.firstName = req.body.firstName || '';
+    existingLead.lastName = req.body.lastName || '';
+    existingLead.dateOfBirth = req.body.dob || '';
+    existingLead.email = req.body.email || '';
+    existingLead.gender = req.body.gender || '';
+    existingLead.agent = req.body.agent || '';
+    existingLead.phoneNumber = req.body.phoneNumber || '';
+    existingLead.mailingAddress = req.body.mailingAddress || '';
+    existingLead.insuredProperty = req.body.insuredProperty || '';
+    existingLead.propertyType = req.body.propertyType || '';
+    existingLead.loanPurpose = req.body.loanPurpose || '';
+    existingLead.loanProcessor = req.body.email || '';
+    existingLead.currentPremium = req.body.currentPremium || '';
+    existingLead.newPremium = req.body.newPremium || '';
+    existingLead.cheaper = req.body.cheaper || '';
+    existingLead.occupancy = req.body.occupancy || '';
+    existingLead.save((err) => {
+      if (err) { 
+        req.flash('errors', { msg: 'Error edit. Please contact adminstrator to check' });
+        return res.redirect('/users');
+      }
+      req.flash('success', { msg: 'Success!  Update successfully for account '+ req.body.firstName + ' ' + req.body.lastName });
+      return res.redirect('/leads');
+    });
+
+  });  
+
+  };
+
+
 exports.leadPost = (req, res) => {
   console.log("Body", req.body)
   Lead.findOneAndUpdate(
@@ -87,3 +136,4 @@ exports.leadPost = (req, res) => {
     }
   );
 };
+
