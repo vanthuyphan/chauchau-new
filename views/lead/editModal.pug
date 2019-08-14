@@ -1,0 +1,94 @@
+#editTransaction.modal.fade(tabindex='-1')
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      form(method='POST', action='/editLeadTransaction')
+        .modal-header
+          h4.modal-title Edit Transaction
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+        input(type='hidden', name='_csrf', value=_csrf)
+        .modal-body
+          input#leadId(type='text', name='leadId', value='')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='firstName') First Name
+            .col-md-7
+              input#firstName.form-control(type='text', name='firstName', placeholder='First Name', autofocus='autofocus', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='lastName') Last Name
+            .col-md-7
+              input#lastName.form-control(type='text', name='lastName', placeholder='Last Name', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='dob')  Date of Birth
+            .col-md-7
+              input#dob.form-control(type='date', name='dob', placeholder='Date of Birth', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='gender')  Gender
+            .col-md-7
+              select#gender.form-control(name='gender', required='required')
+                option#Female Female
+                option#Male Male
+                option#Other Other
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='phoneNumber')  Phone Number
+            .col-md-7
+              input#phoneNumber.form-control(type='tel', name='phoneNumber', placeholder='Phone Number', autocomplete='off', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='email')  Email
+            .col-md-7
+              input#email.form-control(type='email', name='email', placeholder='Email', autofocus='autofocus', autocomplete='email', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='mailingAddress') Mailing Address
+            .col-md-7
+              input#mailingAddress.form-control(type='text', name='mailingAddress', placeholder='Mailing Address', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='insuredProperty')  Insured Property Address
+            .col-md-7
+              input#insuredProperty.form-control(type='text', name='insuredProperty', placeholder='Insured Property Address', autocomplete='on', required='required')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='propertyType')  Property Type
+            .col-md-7
+              select#propertyType.form-control(name='propertyType', required='required')
+                option#SFR Single Family Residence
+                option#Condominium Condominium
+                option#Townhouse Townhouse/PUD
+                option#Duplex Duplex
+                option#Triplex Triplex
+                option#Fourplex Fourplex
+                option#MH Manuf Housing
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='occupancy')  Occupancy
+            .col-md-7
+              select#occupancy.form-control(name='occupancy', required='required')
+                option#OO Owner Occupied
+                option#SH Second Home
+                option#IN Investment
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='currentPremium')  Current Premium
+            .col-md-7
+              input#currentPremium.form-control(type='number', name='currentPremium', placeholder='Current Premium')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='newPremium')  New Premium
+            .col-md-7
+              input#newPremium.form-control(type='number', name='newPremium', placeholder='New Premium')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='cheaper')  Cheaper?
+            .col-md-7
+              select#cheaper.form-control(name='cheaper')
+                option#Yes Yes
+                option#No No 
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='loanPurpose')  Loan Purpose
+            .col-md-7
+              select#loanPurpose.form-control(name='loanPurpose', required='required')
+                option#Purchase Purchase
+                option#Refinance Refinance
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='loanProcessor')  Loan Processor
+            .col-md-7
+              input#loanProcessor.form-control(type='text', name='loanProcessor', placeholder='Loan Processor')
+          .form-group.row
+            label.col-md-3.col-form-label.font-weight-bold.text-right(for='agent')  Agent
+            .col-md-7
+              input#agent.form-control(type='text', name='agent', placeholder='Agent')
+        .modal-footer
+          input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+          input.btn.btn-success(type='submit', value='Update')
