@@ -5,12 +5,15 @@ block head
   //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
   //script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
   //script(src='https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js')
-  link(rel='stylesheet', href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+  //link(rel='stylesheet', href='https://cdn.datatables.net/1.10.17/css/jquery.dataTables.min.css')
   style(type='text/css').
     .table-wrapper {
     background: #fff;
     padding: 20px 25px;
     //margin: 30px 0;
+    overflow:hidden;
+    width:100%;
+    table-layout: fixed;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     }
@@ -49,6 +52,10 @@ block head
     .table-title .btn span {
     float: left;
     margin-top: 2px;
+    }
+    table.table {
+    table-layout:fixed;
+    
     }
     table.table tr th,
     table.table tr td {
@@ -235,15 +242,15 @@ block head
     table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
     }
-  script.
+  script(type='text/javascript').
     $(document).ready(function () {
     //Data tabble
     $('#leadTable').DataTable({
     "scrollX": true,
-    columnDefs: [{
-    orderable: false,
-    targets: 0
-    }]
+    columnDefs: [
+    { orderable: false, targets: 0 },
+    { orderable: false, targets: 9 }
+    ]
     });
     //$('.dataTables_length').addClass('bs-select');
     //Select all checkbox
@@ -251,7 +258,8 @@ block head
     $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
     });
     });
-    
+
+    //Delete single transaction
     //get id of lead transaction in anchor to delete Modal
     $(document).on("click", ".delete", function () {
     var leadId = $(this).data('id');
@@ -259,6 +267,9 @@ block head
     $('#deleteTransaction').modal('show');
     });
 
+
+    //Delete selected transaction
+    //get id of all selected lead transaction
     $(document).on("click","#deleteSelect", function () {
     var idArray = "";
     $('input[type="checkbox"]').each(function(){
@@ -269,7 +280,63 @@ block head
     idArray = idArray.substring(0, idArray.length - 1);
     $(".modal-body #leadId").val(idArray);
     $('#deleteTransaction').modal('show');
-    });    
+    });  
+
+    //Edit selected transaction
+    $(document).on("click", ".edit", function () {
+    var data = $(this).data();
+
+    $(".modal-body #leadId").val(data['id']);
+    $(".modal-body #firstName").val(data['first']);
+    $(".modal-body #lastName").val(data['last']);
+    $(".modal-body #phoneNumber").val($(this).data('phone'));
+    $(".modal-body #mailingAddress").val(data['mailing']);
+    $(".modal-body #insuredProperty").val(data['insured']);
+    $(".modal-body #agent").val(data['agent']);
+    $(".modal-body #loanProcessor").val(data['processor']);
+    $(".modal-body #email").val(data['email']);
+    
+
+    //Number fields
+    var num = Number($(this).attr('data-currentPremium'));
+    $(".modal-body #currentPremium").val(num);
+    var num = Number($(this).attr('data-newPremium'));
+    $(".modal-body #newPremium").val(num);
+
+    //For selected fields
+    document.getElementById(data['cheaper']).selected = "true";
+    document.getElementById(data['purpose']).selected = "true";
+    document.getElementById(data['gender']).selected = "true";
+
+    var type = data['type'];
+    if ( type == 'Single Family Residence'){
+    $("#SFR").prop("selected", true);
+    } else if (type == 'Manuf Housing') {
+    $("#MH").prop("selected", true);
+    } else if (type == 'Townhouse/PUD') {
+    $("#Townhouse").prop("selected", true);
+    } else {
+    document.getElementById(type).selected = "true";
+    }
+
+    var occup = data['occupancy'];
+    if ( occup == 'Owner Occupied'){
+    $("#OO").prop("selected", true);
+    } else if (occup == 'Second Home') {
+    $("#SH").prop("selected", true);
+    } else {
+    $("#IN").prop("selected", true);
+    }
+
+    //Get the date in ISO format
+    var date = data['dob'];
+    var datestr = date.substring(0, 10);
+    $(".modal-body #dob").val(datestr);
+   
+    $('#editTransaction').modal('show');
+
+    });
+
 block content
     .container
       .table-wrapper
@@ -282,7 +349,7 @@ block content
                 | Delete
               button.btn.btn-success.active(type='button', data-toggle='modal', data-target='#addTransaction')
                 | Add
-      table#leadTable.table.table-hover.table-stripped.table-sm(width='100%')
+      table#leadTable.table.table-hover.table-stripped.table-sm.nowrap(cellspacing='0', width='100%')
         thead
           tr
             th(scope='col')
@@ -293,9 +360,10 @@ block content
             th(scope='col') Insured Property
             th(scope='col') Current Premium
             th(scope='col') New Premium
-            th(scope='col') Beatable?
+            th(scope='col') Cheaper?
             th(scope='col') Loan Purpose
             th(scope='col') Loan Processor
+            th(scope='col') Agent
             th(scope='col') Action
         tbody
           each lead in leads
@@ -304,21 +372,29 @@ block content
               td
                 span.custom-checkbox
                   input#id(type='checkbox', data-id= idLead, name=idLead, value=idLead)
-                  label(for='checkbox1')
+                  label(for='checkbox')
               td= lead.firstName + ' ' + lead.lastName
               td= lead.insuredProperty
               td= lead.currentPremium
               td= lead.newPremium
-              td= lead.beatable
+              td= lead.cheaper
               td= lead.loanPurpose
               td= lead.loanProcessor
+              td= lead.agent
               //td= lead.email
               td
-                a.edit(href='#editEmployeeModal', data-toggle='modal',id="editId"+ idLead,data-testid=count, data-userName=user.email)
+                a.edit(href='#editTransaction', data-toggle='modal',id="editId"+ idLead, 
+                data-id=idLead, data-first = lead.firstName, data-last = lead.lastName,
+                data-mailing = lead.mailingAddress, data-insured = lead.insuredProperty,
+                data-currentPremium = lead.currentPremium, data-newPremium = lead.newPremium, 
+                data-cheaper = lead.cheaper, data-purpose = lead.loanPurpose, data-gender = lead.gender,
+                data-processor = lead.loanProcessor data-agent = lead.agent, 
+                data-email = lead.email, data-dob = lead.dateOfBirth, data-phone = lead.phoneNumber,
+                data-type = lead.propertyType, data-occupancy = lead.occupancy)
                   i.material-icons(data-toggle='tooltip', title='Edit') 
                 a.delete(href='#deleteTransaction', data-toggle='modal', data-id= idLead, name=idLead )
                   i.material-icons(data-toggle='tooltip', title='Delete') 
       include addModal
       include deleteModal
-      //include editModal
+      include editModal
 
