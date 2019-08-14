@@ -34,6 +34,7 @@ const leadController = require('./controllers/lead');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const policyController = require('./controllers/policy');
 
 /**
  * API keys and Passport configuration.
@@ -160,6 +161,14 @@ app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
 app.post('/createUser', passportConfig.isAuthenticated,userController.createUser);
 app.post('/editUser',passportConfig.isAuthenticated, userController.editUser);
 app.post('/deleteUser',passportConfig.isAuthenticated, userController.deleteUser);
+
+/**
+ * Policy
+ */
+app.get('/policy',passportConfig.isAuthenticated, policyController.index);
+app.post('/createPolicy',passportConfig.isAuthenticated, policyController.createPolicy);
+app.post('/deletePolicy',passportConfig.isAuthenticated, policyController.deletePolicy);
+app.post('/editPolicy',passportConfig.isAuthenticated, policyController.editPolicy);
 
 
 /**

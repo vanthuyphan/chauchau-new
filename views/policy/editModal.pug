@@ -1,0 +1,54 @@
+#editPolicyModal.modal.fade
+        .modal-dialog
+          .modal-content
+            form(method='POST',action='/editPolicy')
+              .modal-header
+                h4.modal-title Edit Policy
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                input(type='hidden', name='_csrf', value=_csrf)
+              .modal-body
+                input#policyId(type='hidden', name='policyId', value='')
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='epolicynumber') Policy Number
+                    .col-md-7
+                        input.form-control(type='text', name='epolicynumber', id='epolicynumber', placeholder='Policy Number', autofocus, autocomplete='epolicynumber', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='attribute') Attribute
+                    .col-md-7
+                        input.form-control(type='text', name='attribute', id='attribute', placeholder='Attribute', autocomplete='attribute', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='status') Status
+                    .col-md-7
+                        input.form-control(type='text', name='status', id='estatus', placeholder='Status', autocomplete='status', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='clientnumber') Client Name
+                    .col-md-7
+                        select#eclientnumber.select.form-control.input-lg(name='eclientnumber')
+                           each lead in leads
+                                option(value=lead.email) #{lead.firstName}
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='eagentnumber') Agent Number
+                    .col-md-7
+                        input.form-control(type='text', name='eagentnumber', id='eagentnumber', placeholder='Agent Number', autocomplete='eagentnumber', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='created') Created
+                    .col-md-7
+                        input.form-control(type='text', name='created', id='created', placeholder='Created', autocomplete='created', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='estatusupdatedate') Status Update Date
+                    .col-md-7
+                        input.form-control(type='date', name='estatusupdatedate', id='estatusupdatedate', placeholder='Status Update Date', autocomplete='estatusupdatedate', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='note') Note
+                    .col-md-7
+                        input.form-control(type='text', name='note', id='note', placeholder='Note', autocomplete='note', required)
+                .form-group.row
+                    label.col-md-3.col-form-label.font-weight-bold.text-right(for='type')  Type
+                    .col-md-7
+                        select#type.form-control(name='type', required='type')
+                            option(value='Auto') Auto
+                            option(value='Home') Home
+                            option(value='Commercial') Commercial
+              .modal-footer
+                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+                input.btn.btn-info(type='submit', value='Save')

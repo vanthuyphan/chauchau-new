@@ -1,0 +1,52 @@
+#addPolicyModal.modal.fade
+        .modal-dialog
+          .modal-content
+            form(method='POST',action='/createPolicy')
+              .modal-header
+                h4.modal-title Add New Policy
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+              input(type='hidden', name='_csrf', value=_csrf)
+              .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='policyNumber') Policy Number
+                .col-md-7
+                  input.form-control(type='text', name='policyNumber', id='policyNumber', placeholder='Policy Number', autofocus, autocomplete='policyNumber', required)
+              .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='attribute') Attribute
+                .col-md-7
+                  input.form-control(type='text', name='attribute', id='attribute', placeholder='Attribute', autocomplete='attribute', required)
+              .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='status') Status
+                .col-md-7
+                  input.form-control(type='text', name='status', id='status', placeholder='Status', autocomplete='status', required)
+                  .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='clientNumber') Client Name
+                .col-md-7
+                    select#clientNumber.select.form-control.input-lg(name='clientNumber')
+                     each lead in leads
+                       option(value=lead.email) #{lead.firstName}
+                    .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='agentNumber') Agent Number
+                .col-md-7
+                  input.form-control(type='text', name='agentNumber', id='agentNumber', placeholder='Agent Number', autocomplete='agentNumber', required)
+                  .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='created') Created
+                .col-md-7
+                  input.form-control(type='text', name='created', id='created', placeholder='Created', autocomplete='created', required)
+                  .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='statusUpdateDate') Status Update Date
+                .col-md-7
+                  input.form-control(type='date', name='statusUpdateDate', id='statusUpdateDate', placeholder='Status Update Date', autocomplete='statusUpdateDate', required)
+                  .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='note') Note
+                .col-md-7
+                  input.form-control(type='text', name='note', id='note', placeholder='Note', autocomplete='note', required)
+                  .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='type')  Type
+                .col-md-7
+                    select#Type.form-control(name='type', required='type')
+                        option Auto
+                        option Home
+                        option Commercial
+              .modal-footer
+                input.btn.btn-default(type='button', data-dismiss='modal', value='Cancel')
+                input.btn.btn-success(type='submit', value='Add')
